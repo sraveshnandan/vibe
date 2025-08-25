@@ -5,7 +5,7 @@ export const appRouter = createTRPCRouter({
   hello: baseProcedure
     .input(
       z.object({
-        text: z.string().optional(),
+        value: z.string().optional(),
       })
     )
     .query((opts) => {
@@ -16,17 +16,17 @@ export const appRouter = createTRPCRouter({
   createAi: baseProcedure
     .input(
       z.object({
-        name: z.string(),
+        name: z.string().optional(),
       })
     )
     .mutation(async ({ input }) => {
+      console.log(input);
       const res = await inngest.send({
-        name: "test-fn",
+        name: "test",
         data: {
-          email: "sravesh@email.com",
+          value: input.name,
         },
       });
-      console.log(res);
       return { message: `Hi ${input.name}` };
     }),
 });
